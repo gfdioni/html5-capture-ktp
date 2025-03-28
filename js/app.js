@@ -19,13 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize the camera
     async function initCamera() {
         try {
-            // Request camera access with preferred settings
+            // Check if device is in portrait mode
+            const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+            
+            // Request camera access with preferred settings based on orientation
             const constraints = {
                 video: {
                     facingMode: 'environment', // Use back camera if available
-                    width: { ideal: 1920 },
-                    height: { ideal: 1080 },
-                    aspectRatio: { ideal: 16/9 }
+                    width: { ideal: isPortrait ? 1080 : 1920 },
+                    height: { ideal: isPortrait ? 1920 : 1080 },
+                    // KTP card has roughly 16:10 aspect ratio (landscape)
+                    // In portrait mode, we want 10:16 (inverted)
+                    aspectRatio: { ideal: isPortrait ? 10/16 : 16/10 }
                 }
             };
             
@@ -132,6 +137,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize camera on page load
     initCamera();
+    
+    // Listen for orientation changes and reinitialize camera
+    window.addEventListener('orientationchange', () => {
+        // Small delay to allow the browser to complete the orientation change
+        setTimeout(() => {
+            // Stop current stream before reinitializing
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            initCamera();
+        }, 300);
+    });
     
     // Clean up resources when page is unloaded
     window.addEventListener('beforeunload', () => {
