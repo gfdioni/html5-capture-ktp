@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KTP Capture</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>KTP Capture</h1>
+        <div class="camera-container">
+            <video id="camera" autoplay playsinline></video>
+            <div class="overlay">
+                <div class="ktp-frame"></div>
+                <div class="corner top-left"></div>
+                <div class="corner top-right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="corner bottom-right"></div>
+            </div>
+            <canvas id="canvas" style="display: none;"></canvas>
+        </div>
+        <div class="controls">
+            <button id="captureBtn" class="btn primary">Capture</button>
+            <button id="retakeBtn" class="btn secondary" style="display: none;">Retake</button>
+            <button id="toggleFlashBtn" class="btn secondary">Toggle Flash</button>
+        </div>
+        <div class="result-container" style="display: none;">
+            <h2>Captured Image</h2>
+            <img id="capturedImage" alt="Captured KTP">
+            <div class="action-buttons">
+                <button id="downloadBtn" class="btn primary">Download</button>
+                <button id="saveBtn" class="btn secondary">Save</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>
