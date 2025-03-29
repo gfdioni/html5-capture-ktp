@@ -54,55 +54,48 @@ h1 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 85%;
-    height: 55%;
-    border: 2px dashed rgba(255, 255, 255, 0.8);
+    /* Default size that will be overridden by JavaScript */
+    width: 80%;
+    height: 50%;
+    border: 3px dashed rgba(255, 255, 255, 0.9);
     border-radius: 8px;
-    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.4);
 }
 
 .corner {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     border-color: #fff;
     border-style: solid;
     border-width: 0;
+    /* All corners are positioned at the center initially */
+    top: 50%;
+    left: 50%;
+    /* Transform will be set dynamically by JavaScript */
 }
 
 .top-left {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) translate(-42.5%, -27.5%);
-    border-left-width: 3px;
-    border-top-width: 3px;
+    border-left-width: 4px;
+    border-top-width: 4px;
     border-top-left-radius: 4px;
 }
 
 .top-right {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) translate(42.5%, -27.5%);
-    border-right-width: 3px;
-    border-top-width: 3px;
+    border-right-width: 4px;
+    border-top-width: 4px;
     border-top-right-radius: 4px;
 }
 
 .bottom-left {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) translate(-42.5%, 27.5%);
-    border-left-width: 3px;
-    border-bottom-width: 3px;
+    border-left-width: 4px;
+    border-bottom-width: 4px;
     border-bottom-left-radius: 4px;
 }
 
 .bottom-right {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) translate(42.5%, 27.5%);
-    border-right-width: 3px;
-    border-bottom-width: 3px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
     border-bottom-right-radius: 4px;
 }
 
@@ -179,23 +172,43 @@ h1 {
     }
 }
 
-/* Portrait orientation adjustments for KTP card ratio */
+/* Portrait orientation adjustments */
 @media (orientation: portrait) {
     .camera-container {
         max-width: 100%;
-        /* Maintain aspect ratio closer to KTP card (85.6mm × 54mm) */
-        aspect-ratio: 10/16;
+        /* Set a fixed aspect ratio for the container to prevent distortion */
+        aspect-ratio: 3/4; /* Slightly taller than wide for portrait mode */
+        height: auto;
     }
     
     #camera {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: cover; /* Ensures the video fills the container */
     }
     
+    /* Default frame dimensions for portrait mode (will be overridden by JavaScript) */
     .ktp-frame {
-        width: 90%;
-        /* Adjust height to match KTP card proportions in portrait mode */
-        height: 60%;
+        width: 80%;
+        /* KTP aspect ratio is 85.6mm × 54mm (roughly 1.585:1) */
+        /* In portrait mode, we maintain this ratio */
+        height: calc(80% / 1.585);
+    }
+    
+    /* Default corner positions for portrait mode */
+    .top-left {
+        transform: translate(-50%, -50%) translate(-40%, -calc(40% / 1.585));
+    }
+    
+    .top-right {
+        transform: translate(-50%, -50%) translate(40%, -calc(40% / 1.585));
+    }
+    
+    .bottom-left {
+        transform: translate(-50%, -50%) translate(-40%, calc(40% / 1.585));
+    }
+    
+    .bottom-right {
+        transform: translate(-50%, -50%) translate(40%, calc(40% / 1.585));
     }
 }
